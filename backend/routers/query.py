@@ -16,7 +16,8 @@ query_router = APIRouter(prefix="/query", tags=['query'])
 async def chat_completions(data: schemas.ChatCompletions, api_keys: list[str] = Depends(authorize)):
 
     api_keys = openai_api.get_api_keys(api_keys)
-
+    if data.tools is None:
+        data.tool_choice = None
     return await openai_api.chat_completions(data, api_keys)
 
 

@@ -1,5 +1,7 @@
+from typing import Optional, Annotated
+
 from fastapi import UploadFile, File
-from pydantic import BaseModel
+from pydantic import BaseModel, RootModel, field_validator, Field
 from utils.config import settings
 
 
@@ -19,10 +21,50 @@ class Message(BaseModel):
     content: str | Content
 
 
+class Property(BaseModel):
+    type: str
+    description: str
+
+
+class PropertyEnum(Property):
+    enum: list[str]
+
+
+class Properties(RootModel):
+    root: dict[str, Property | PropertyEnum]
+
+
+class Parameters(BaseModel):
+    type: str
+    properties: Properties
+    required: list[str] | None = None
+
+
+class Function(BaseModel):
+    name: str
+
+
+class FunctionFull(Function):
+    description: str | None = None
+    parameters: Parameters | None = None
+
+
+class Tool(BaseModel):
+    type: str = 'function'
+    function: Function
+
+
+class ToolFull(BaseModel):
+    type: str = 'function'
+    function: FunctionFull
+
+
 class ChatCompletions(BaseModel):
     model: str = settings.model_text
     max_tokens: int = 1024
     messages: list[Message]
+    tools: list[ToolFull] | None = None
+    tool_choice: str | None | Tool = 'auto'
 
 
 class ImageGeneration(BaseModel):
