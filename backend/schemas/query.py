@@ -21,18 +21,8 @@ class Message(BaseModel):
     content: str | Content
 
 
-class Property(BaseModel):
-    type: str
-    description: str
-    items: dict | None = None
-
-
-class PropertyEnum(Property):
-    enum: list[str]
-
-
 class Properties(RootModel):
-    root: dict[str, Property | PropertyEnum]
+    root: dict[str, dict]
 
 
 class Parameters(BaseModel):
@@ -62,7 +52,7 @@ class ToolFull(BaseModel):
 
 class ChatCompletions(BaseModel):
     model: str = settings.model_text
-    max_tokens: int = 1024
+    max_tokens: int | None = None
     messages: list[Message]
     tools: list[ToolFull] | None = None
     tool_choice: str | None | Tool = 'auto'
