@@ -26,12 +26,16 @@ class Property(BaseModel):
     description: str
 
 
+class PropertyItems(Property):
+    items: dict | None = None
+
+
 class PropertyEnum(Property):
     enum: list[str]
 
 
 class Properties(RootModel):
-    root: dict[str, Property | PropertyEnum]
+    root: dict[str, Property | PropertyItems | PropertyEnum]
 
 
 class Parameters(BaseModel):
