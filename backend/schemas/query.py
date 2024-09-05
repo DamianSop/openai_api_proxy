@@ -24,9 +24,6 @@ class Message(BaseModel):
 class Property(BaseModel):
     type: str
     description: str
-
-
-class PropertyItems(Property):
     items: dict | None = None
 
 
@@ -35,7 +32,7 @@ class PropertyEnum(Property):
 
 
 class Properties(RootModel):
-    root: dict[str, Property | PropertyItems | PropertyEnum]
+    root: dict[str, Property | PropertyEnum]
 
 
 class Parameters(BaseModel):
