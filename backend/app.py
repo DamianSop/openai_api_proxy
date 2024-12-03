@@ -1,3 +1,4 @@
+import os
 from contextlib import asynccontextmanager
 import secrets
 from fastapi import FastAPI
@@ -12,10 +13,15 @@ logger = get_module_logger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     if settings.use_auth_token:
-        token = secrets.token_hex(32)
-        settings.auth_token = token
-        with open('generations/token.txt', 'w') as f:
-            f.write(token)
+        file_path = 'generations/token.txt'
+        if not os.path.exists(file_path) or os.stat(file_path).st_size == 0:
+            token = secrets.token_hex(32)
+            settings.auth_token = token
+            with open(file_path, 'w') as f:
+                f.write(token)
+        else:
+            with open(file_path, 'r') as f:
+                settings.auth_token = f.readline()
     yield
 
 
