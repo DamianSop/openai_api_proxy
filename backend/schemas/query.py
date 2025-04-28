@@ -1,4 +1,4 @@
-from typing import Optional, Annotated
+from typing import Optional, Annotated, Literal, Union
 
 from fastapi import UploadFile, File
 from pydantic import BaseModel, RootModel, field_validator, Field
@@ -40,14 +40,21 @@ class FunctionFull(Function):
     parameters: Parameters | None = None
 
 
-class Tool(BaseModel):
-    type: str = 'function'
-    function: Function | None = None
+class FunctionTool(BaseModel):
+    type: Literal["function"]
+    function: Function
+
+
+class WebSearchTool(BaseModel):
+    type: Literal["web_search_preview"]
+
+
+Tool = Union[FunctionTool, WebSearchTool]
 
 
 class ToolFull(BaseModel):
     type: str = 'function'
-    function: FunctionFull | None = None
+    function: FunctionFull
 
 
 class ChatCompletions(BaseModel):
@@ -55,7 +62,7 @@ class ChatCompletions(BaseModel):
     max_tokens: int | None = None
     messages: list[Message]
     tools: list[ToolFull] | None = None
-    tool_choice: str | None | Tool = 'auto'
+    tool_choice: str | None | ToolFull = 'auto'
 
 
 class ImageGeneration(BaseModel):
