@@ -42,12 +42,12 @@ class FunctionFull(Function):
 
 class Tool(BaseModel):
     type: str = 'function'
-    function: Function
+    function: Function | None = None
 
 
 class ToolFull(BaseModel):
     type: str = 'function'
-    function: FunctionFull
+    function: FunctionFull | None = None
 
 
 class ChatCompletions(BaseModel):
