@@ -56,7 +56,7 @@ def openai_request(func):
 
 @openai_request
 def chat_completions(data: schemas.ChatCompletions, api_keys: list[str], client: OpenAI = None):
-    return client.chat.completions.create(**data.model_dump())
+    return client.chat.completions.create(**data.model_dump(exclude_none=True))
 
 
 @openai_request
