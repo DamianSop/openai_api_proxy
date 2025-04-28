@@ -21,6 +21,14 @@ async def chat_completions(data: schemas.ChatCompletions, api_keys: list[str] = 
     return await openai_api.chat_completions(data, api_keys)
 
 
+@query_router.post('/responses')
+async def responses(data: schemas.ResponseCreateRequest, api_keys: list[str] = Depends(authorize)):
+    api_keys = openai_api.get_api_keys(api_keys)
+    if data.tool_choice is None:
+        data.tool_choice = None
+    return await openai_api.responses(data, api_keys)
+
+
 @query_router.post('/image_generation')
 async def image_generation(data: schemas.ImageGeneration, api_keys: list[str] = Depends(authorize)):
     api_keys = openai_api.get_api_keys(api_keys)

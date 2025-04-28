@@ -64,3 +64,8 @@ def image_generation(data: schemas.ImageGeneration, api_keys: list[str], client:
     return client.images.generate(**data.model_dump())
 
 
+@openai_request
+def responses(data: schemas.ResponseCreateRequest, api_keys: list[str], client: OpenAI = None):
+    return client.responses.create(**data.model_dump(exclude_none=True))
+
+

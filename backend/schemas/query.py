@@ -72,3 +72,12 @@ class ImageGeneration(BaseModel):
      This param is only supported for dall-e-3.
     '''
     style: str | None = None
+
+
+class ResponseCreateRequest(BaseModel):
+    model: str
+    input: str
+    tools: Optional[list[Tool]] = None
+    tool_choice: Optional[list[str, Tool]] = "auto"
+    max_tokens: Optional[int] = None
+    seed: Optional[int] = None
