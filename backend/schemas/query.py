@@ -42,11 +42,12 @@ class FunctionFull(Function):
 
 class FunctionTool(BaseModel):
     type: Literal["function"]
-    function: Function
-
+    name: str
+    function: FunctionFull
 
 class WebSearchTool(BaseModel):
     type: Literal["web_search_preview"]
+    name: str
 
 
 Tool = Union[FunctionTool, WebSearchTool]
