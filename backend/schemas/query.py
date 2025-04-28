@@ -85,6 +85,6 @@ class ResponseCreateRequest(BaseModel):
     model: str
     input: str
     tools: Optional[list[Tool]] = None
-    tool_choice: Optional[list[str, Tool]] = "auto"
+    tool_choice: Optional[Union[str, Tool]] = "auto"
     max_tokens: Optional[int] = None
     seed: Optional[int] = None
