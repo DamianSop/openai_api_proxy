@@ -45,8 +45,10 @@ class FunctionTool(BaseModel):
     name: str
     function: FunctionFull
 
+
 class WebSearchTool(BaseModel):
     type: Literal["web_search_preview"]
+
 
 Tool = Union[FunctionTool, WebSearchTool]
 
@@ -56,12 +58,17 @@ class ToolFull(BaseModel):
     function: FunctionFull
 
 
+class WebSearchOptions(BaseModel):
+    search_context_size: Optional[Literal['low', 'medium', 'high']] = 'low'
+
+
 class ChatCompletions(BaseModel):
     model: str = settings.model_text
     max_tokens: int | None = None
     messages: list[Message]
     tools: list[ToolFull] | None = None
     tool_choice: str | None | ToolFull = 'auto'
+    web_search_options: Optional[WebSearchOptions] = None
 
 
 class ImageGeneration(BaseModel):
