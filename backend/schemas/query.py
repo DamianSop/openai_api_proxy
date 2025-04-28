@@ -47,8 +47,6 @@ class FunctionTool(BaseModel):
 
 class WebSearchTool(BaseModel):
     type: Literal["web_search_preview"]
-    name: str
-
 
 Tool = Union[FunctionTool, WebSearchTool]
 
