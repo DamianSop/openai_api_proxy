@@ -45,10 +45,8 @@ class FunctionTool(BaseModel):
     name: str
     function: FunctionFull
 
-
 class WebSearchTool(BaseModel):
     type: Literal["web_search_preview"]
-
 
 Tool = Union[FunctionTool, WebSearchTool]
 
@@ -60,7 +58,6 @@ class ToolFull(BaseModel):
 
 class WebSearchOptions(BaseModel):
     search_context_size: Optional[Literal['low', 'medium', 'high']] = 'low'
-    recency: int | None = None
 
 
 class ChatCompletions(BaseModel):
@@ -69,7 +66,6 @@ class ChatCompletions(BaseModel):
     messages: list[Message]
     tools: list[ToolFull] | None = None
     tool_choice: str | None | ToolFull = 'auto'
-    web_search_options: Optional[WebSearchOptions] = None
 
 
 class ImageGeneration(BaseModel):
