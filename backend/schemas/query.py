@@ -60,6 +60,7 @@ class ToolFull(BaseModel):
 
 class WebSearchOptions(BaseModel):
     search_context_size: Optional[Literal['low', 'medium', 'high']] = 'low'
+    recency: int | None = None
 
 
 class ChatCompletions(BaseModel):
